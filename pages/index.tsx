@@ -1,13 +1,15 @@
-import type { NextPage } from 'next'
+// import type { NextPage } from 'next'
 
 import axios from 'axios'
 
-// interface IProps {
-//   videos:
-// }
+import { Video } from '../types'
 
-const Home: NextPage = ({ videos }) => {
-console.log(videos);
+interface IProps {
+  videos: Video[]
+}
+
+const Home = ({ videos }: IProps) => {
+  console.log(videos);
 
 
   return (
