@@ -13,8 +13,8 @@ const NoResults = ({ text }: IProps) => {
       <p className='text-8xl'>
         {text === 'No comments yet.'
           ? <><BiCommentX className='mx-auto' /><p className='text-2xl text-center'>{text}</p></>
-          : (<MdOutlineVideocamOff />
-          )}
+          : <><MdOutlineVideocamOff className='mx-auto' /><p className='text-2xl text-center'>{text}</p></>
+        }
       </p>
 
     </div>
