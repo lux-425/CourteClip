@@ -72,7 +72,7 @@ const Comments = ({ isPostingComment, comment, comments, setComment, addComment 
             </>
           ))
         ) : (
-          <NoResults text="No comments yet." />
+          <NoResults text="No comments yet" />
         )}
       </div>
 
