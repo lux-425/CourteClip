@@ -26,9 +26,17 @@ interface IProps {
 
 const Detail = ({ postDetails }: IProps) => {
 
+  const router = useRouter()
+
+  const videoRef = useRef<HTMLVideoElement>(null)
+
   const [post, setPost] = useState(postDetails)
+
   const [playing, setPlaying] = useState(false)
   const [isVideoMuted, setIsVideoMuted] = useState(false)
+
+  const [comment, setComment] = useState<string>('')
+  const [isPostingComment, setIsPostingComment] = useState(false)
 
   const { userProfile }: any = useAuthStore()
 
@@ -50,9 +58,23 @@ const Detail = ({ postDetails }: IProps) => {
     }
   }
 
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const addComment = async (e: { preventDefault: () => void }) => {
+    // Otherwise, the browser will reload the page
+    e.preventDefault();
 
-  const router = useRouter()
+    if (userProfile && comment) {
+      setIsPostingComment(true)
+
+      const res = await axios.put(`${BASE_URL}/api/post/${post._id}`, {
+        userId: userProfile._id,
+        comment
+      });
+
+      setPost({ ...post, comments: res.data.comments })
+      setComment('')
+      setIsPostingComment(false)
+    }
+  }
 
   if (!post) return null
 
@@ -141,11 +163,19 @@ const Detail = ({ postDetails }: IProps) => {
           <p className='px-10 text-md text-gray-600'>{post.caption}</p>
           <div className='mt-10 px-10'>
             {userProfile && (
-              <LikeButton likes={post.likes} handleLike={() => handleLike(true)} handleDislike={() => handleLike(false)} />
+              <LikeButton
+                likes={post.likes}
+                handleLike={() => handleLike(true)}
+                handleDislike={() => handleLike(false)}
+              />
             )}
           </div>
           <Comments
-
+            comment={comment}
+            setComment={setComment}
+            addComment={addComment}
+            comments={post.comments}
+            isPostingComment={isPostingComment}
           />
         </div>
       </div>
@@ -155,10 +185,10 @@ const Detail = ({ postDetails }: IProps) => {
 }
 
 export const getServerSideProps = async ({ params: { id } }: { params: { id: string } }) => {
-  const { data } = await axios.get(`${BASE_URL}/api/post/${id}`)
+  const res = await axios.get(`${BASE_URL}/api/post/${id}`)
 
   return {
-    props: { postDetails: data }
+    props: { postDetails: res.data }
   }
 }
 
