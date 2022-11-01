@@ -37,6 +37,6 @@ export const topics = [
   },
 ];
 
-export const footerList1 = ['About', 'Newsroom', 'Store', 'Contact', 'Careers', 'ByteDance', 'Creator Directory']
-export const footerList2 = ['CourteClip for Good', 'Advertise', 'Developers', 'Transparency', 'CourteClip Rewards']
-export const footerList3 = ['Help', 'Safety', 'Terms', 'Privacy', 'Creator Portal', 'Community Guidelines']
+export const footerList1 = ['About', 'News', 'Store']
+export const footerList2 = ['Contact', 'Advertise', 'Careers', 'API']
+export const footerList3 = ['Help', 'Safety', 'Terms', 'Privacy', 'Guidelines']
